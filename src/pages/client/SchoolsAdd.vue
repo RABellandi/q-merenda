@@ -1,0 +1,232 @@
+<template>
+  <q-card class="my-card q-ma-md">
+    <div class="full-width row wrap">
+      <q-card-section>
+        <div class="text-h6">Adicionar escola</div>
+      </q-card-section>
+    </div>
+    <q-card-section>
+      <q-form class="q-gutter-md" @submit.prevent="submit">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <q-input
+              filled
+              v-model="school"
+              label="Escola"
+              :rules="[(val) => !!val || '* Requirido']"
+              lazy-rules
+              class="q-ma-sm"
+            />
+          </div>
+          <div class="col-12 col-md-3">
+            <q-input
+              filled
+              class="q-ma-sm"
+              v-model="cnpj"
+              mask="##.###.###/####-##"
+              fill-mask
+              label="CNPJ"
+              :rules="[
+                (val) => !!val || '* Requirido',
+                (val) =>
+                  val.replace(/\D/g, '').length > 13 || 'CNPJ incorreto',
+              ]"
+              lazy-rules
+            />
+          </div>
+          <div class="col-12 col-md-3">
+            <q-select
+              filled
+              v-model="gorvernmentType"
+              :options="options"
+              label="Esfera"
+              :rules="[(val) => !!val || '* Requirido']"
+              lazy-rules
+              class="q-ma-sm"
+            />
+          </div>
+          <div class="col-12 col-md-5">
+            <q-input
+              filled
+              class="q-ma-sm"
+              v-model="andress"
+              label="Endereço"
+              :rules="[(val) => !!val || '* Requirido']"
+              lazy-rules
+            />
+          </div>
+          <div class="col-12 col-md-2">
+            <q-input
+              filled
+              class="q-ma-sm"
+              v-model="andress_number"
+              label="Número"
+              type="number"
+              :rules="[(val) => !!val || '* Requirido']"
+              lazy-rules
+            />
+          </div>
+          <div class="col-12 col-md-3">
+            <q-input
+              filled
+              class="q-ma-sm"
+              v-model="district"
+              label="Bairro"
+              :rules="[(val) => !!val || '* Requirido']"
+              lazy-rules
+            />
+          </div>
+          <div class="col-12 col-md-2">
+            <q-input
+              filled
+              class="q-ma-sm"
+              v-model="cep"
+              mask="#####-###"
+              fill-mask
+              label="CEP"
+              :rules="[
+                (val) => !!val || '* Requirido',
+                (val) =>
+                  val.replace(/\D/g, '').length > 7 || 'CEP incorreto',
+              ]"
+              lazy-rules
+            />
+          </div>
+          <div class="col-12 col-md-3">
+            <q-select
+              filled
+              v-model="city"
+              :options="city_options"
+              label="Cidade"
+              :rules="[(val) => !!val || '* Requirido']"
+              lazy-rules
+              class="q-ma-sm"
+            />
+          </div>
+          <div class="col-12 col-md-3">
+            <q-select
+              filled
+              v-model="state"
+              :options="['MATO GROSSO']"
+              label="Estado"
+              class="q-ma-sm"
+              :rules="[(val) => !!val || '* Requirido']"
+              lazy-rules
+            />
+          </div>
+          <div class="col-12 col-md-2">
+            <q-select
+              filled
+              v-model="role"
+              :options="role_options"
+              label="Cargo"
+              class="q-ma-sm"
+              :rules="[(val) => !!val || '* Requirido']"
+              lazy-rules
+            />
+          </div>
+          <div class="col-12 col-md-4">
+            <q-input
+              filled
+              class="q-ma-sm"
+              v-model="phone"
+              mask="(##) #####-####"
+              fill-mask
+              label="Telefone para contato"
+              :rules="[
+                (val) => !!val || '* Requirido',
+                (val) =>
+                  val.replace(/\D/g, '').length > 10 || 'Número incorreto',
+              ]"
+              lazy-rules
+            />
+          </div>
+        </div>
+        <div class="full-width row justify-end">
+          <q-btn
+            label="Adicionar"
+            type="submit"
+            color="primary"
+            class="q-mr-sm"
+          />
+        </div>
+      </q-form>
+    </q-card-section>
+  </q-card>
+</template>
+
+<script>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import axios from "axios";
+
+export default {
+  name: "School",
+  setup() {
+    const school = ref();
+    const cnpj = ref();
+    const gorvernmentType = ref();
+    const andress = ref();
+    const andress_number = ref();
+    const district = ref();
+    const city = ref();
+    const state = ref();
+    const cep = ref();
+    const phone = ref();
+    const role = ref();
+    const options = ["MUNICIPAL", "ESTADUAL", "FEDERAL"];
+    const city_options = ["CUIABÁ", "CAMPO VERDE", "JACIARA",
+     "RONDONÓPOLIS", "PRIMAVERA DO LESTE", "NOBRES", "VÁRZEA GRANDE"];
+    const role_options = ["DIRETOR(A)", "SECRETÁRIO(A)", "MERENDEIRO(A)"];
+    const router = useRouter();
+
+    const submit = async () => {
+      const response = await axios.post("client", {
+        name: school.value,
+        cnpj: cnpj.value.replace(/\D/g, ''),
+        government_type: gorvernmentType.value,
+        andress: andress.value,
+        andress_number: andress_number.value,
+        district: district.value,
+        city: city.value,
+        state: state.value,
+        cep: cep.value.replace(/\D/g, ''),
+        phone: phone.value.replace(/\D/g, ''),
+      });
+
+      const userUp = await updateUser(response.data.data.id);
+
+      await router.push("/cliente/cadastro");
+    };
+
+    const updateUser = async (school_id) => {
+      const user = await axios.get("user");
+      const response = await axios.post("users/client", {
+        user: user.data.data.id,
+        government_entity: school_id,
+        role_in_entity: role.value,
+      });
+    };
+
+    return {
+      school,
+      cnpj,
+      gorvernmentType,
+      options,
+      andress,
+      andress_number,
+      district,
+      city,
+      state,
+      cep,
+      phone,
+      role,
+      role_options,
+      city_options,
+      submit,
+    };
+  },
+};
+</script>
+
+<style></style>
