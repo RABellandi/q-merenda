@@ -9,7 +9,7 @@
             <div class="text-center q-pt-lg">
               <div class="col text-h6 ellipsis">e-MERENDA</div>
               <div class="col ellipsis">
-                Já possuí conta? <a @click="login">Entre por aqui!</a>
+                Já possuí conta? <a @click="login" style="color: blue;">Entre por aqui!</a>
               </div>
             </div>
           </q-card-section>

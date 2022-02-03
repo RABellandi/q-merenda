@@ -14,7 +14,7 @@
         color="white"
         text-color="blue"
         unelevated
-        to="/cliente"
+        to="/login"
         label="Voltar"
         no-caps
       />
