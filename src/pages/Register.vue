@@ -56,7 +56,7 @@
                 :rules="[
                   (val) => !!val || '* Requirido',
                   (val) =>
-                    val.length > 8 ||
+                    val.length > 7 ||
                     'A senha precisa ter pelo menos 8 caracteres',
                 ]"
                 lazy-rules
@@ -70,7 +70,7 @@
                 :rules="[
                   (val) => !!val || '* Requirido',
                   (val) =>
-                    val.length > 8 ||
+                    val.length > 7 ||
                     'A senha precisa ter pelo menos 8 caracteres',
                 ]"
                 lazy-rules
