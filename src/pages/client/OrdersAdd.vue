@@ -206,7 +206,7 @@ export default {
             element.government_entity.name +
             " - " +
             "Chamada: " +
-            (element.bidding.city +
+            (element.bidding.city.city +
               " - " +
               element.bidding.number +
               "/" +

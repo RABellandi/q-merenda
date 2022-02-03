@@ -103,17 +103,6 @@
               class="q-ma-sm"
             />
           </div>
-          <div class="col-12 col-md-3">
-            <q-select
-              filled
-              v-model="state"
-              :options="['MATO GROSSO']"
-              label="Estado"
-              class="q-ma-sm"
-              :rules="[(val) => !!val || '* Requirido']"
-              lazy-rules
-            />
-          </div>
           <div class="col-12 col-md-2">
             <q-select
               filled
@@ -156,7 +145,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onMounted, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 
@@ -175,10 +164,24 @@ export default {
     const phone = ref();
     const role = ref();
     const options = ["MUNICIPAL", "ESTADUAL", "FEDERAL"];
-    const city_options = ["CUIABÁ", "CAMPO VERDE", "JACIARA",
-     "RONDONÓPOLIS", "PRIMAVERA DO LESTE", "NOBRES", "VÁRZEA GRANDE"];
+    const city_options = ref([]);
     const role_options = ["DIRETOR(A)", "SECRETÁRIO(A)", "MERENDEIRO(A)"];
     const router = useRouter();
+
+
+    onBeforeMount( async () => {
+      const cities = await axios.get('cities');
+
+      console.log(cities.data);
+
+      cities.data.data.forEach(element => {
+        city_options.value.push({
+          label: element.city,
+          value: element.id
+          })
+      });
+      console.log(city_options);
+    })
 
     const submit = async () => {
       const response = await axios.post("client", {
@@ -188,7 +191,7 @@ export default {
         andress: andress.value,
         andress_number: andress_number.value,
         district: district.value,
-        city: city.value,
+        city: city.value.value,
         state: state.value,
         cep: cep.value.replace(/\D/g, ''),
         phone: phone.value.replace(/\D/g, ''),

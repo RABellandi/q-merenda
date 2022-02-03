@@ -17,7 +17,12 @@
       <q-card v-for="order in orders" :key="order.id" class="my-card">
         <div class="full-width wrap q-mt-sm">
           <q-card-section class="row">
-            <div class="text-h6 col-12 q-mb-sm">Pedido: Nº{{ order.id }}</div>
+            <div class="text-h6 col-12 col-md-6 q-mb-sm">
+              Pedido: Nº{{ order.id }}
+            </div>
+          </q-card-section>
+          <q-separator size="1px" />
+          <q-card-section class="row">
             <div class="col-12 col-md-3">
               Escola:
               {{ order.contract.government_entity.name }}
@@ -70,16 +75,25 @@
                       </td>
                       <td class="text-center">{{ product.quantity }}</td>
                       <td class="text-center">
-                        {{ 'R$ ' +
-                          (product.quantity *
-                          product.price *
-                          product.unit_id.weight_kg).toFixed(2)
+                        {{
+                          "R$ " +
+                          (
+                            product.quantity *
+                            product.price *
+                            product.unit_id.weight_kg
+                          ).toFixed(2)
                         }}
                       </td>
                     </tr>
                   </tbody>
                 </q-markup-table>
               </div>
+            </div>
+          </q-card-section>
+          <q-separator size="1px" />
+          <q-card-section class="row full-width justify-end">
+            <div class="text-h6 col-12 col-md-6 q-mr-sm text-right">
+              Total: R$ {{ order.total.toFixed(2) }}
             </div>
           </q-card-section>
         </div>
@@ -113,7 +127,7 @@ export default {
       try {
         const response = await axios.get("orders");
         orders.value = response.data.data;
-        orders.value = orders.value.reverse()
+        orders.value = orders.value.reverse();
       } catch (e) {}
       visible.value = false;
     });

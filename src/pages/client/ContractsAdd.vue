@@ -210,19 +210,19 @@ export default {
           label: element.name,
           value: element.id,
         });
-        entity_cities.push(element.city);
+        entity_cities.push(element.city.city);
         entity_types.push(element.government_type);
       });
 
       bidding_ref.push(await axios.get("bidding"));
       bidding_ref[0].data.data.forEach((e) => {
         if (
-          entity_cities.includes(e.city) &
+          entity_cities.includes(e.city.city) &
           entity_types.includes(e.government_type)
         ) {
           bidding_options.value.push({
             label:
-              e.city +
+              e.city.city +
               "/" +
               e.government_type +
               " - " +
