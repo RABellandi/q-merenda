@@ -1,4 +1,12 @@
+import { useRouter } from "vue-router"
+
+const router = useRouter()
+
 const routes = [
+  {
+    path: "",
+    redirect: "/login"
+  },
   {
     path: "/cliente",
     component: () => import("layouts/MainLayout.vue"),

@@ -9,23 +9,56 @@
             <div class="text-center q-pt-lg">
               <div class="col text-h6 ellipsis">e-MERENDA</div>
               <div class="col ellipsis">
-                Já possuí conta? <a @click="login" style="color: blue;">Entre por aqui!</a>
+                Já possuí conta?
+                <a @click="login" style="color: blue">Entre por aqui!</a>
               </div>
+            </div>
+          </q-card-section>
+          <q-card-section
+            v-if="error"
+            class="q-pa-none q-mx-md text-center"
+          >
+            <div style="color: red">
+              Há algo de errado, confira se colocou tudo certo!
             </div>
           </q-card-section>
           <q-card-section>
             <q-form class="q-gutter-md" @submit.prevent="submit">
-              <q-input filled v-model="firstName" label="Nome" lazy-rules />
+              <q-input
+                filled
+                v-model="firstName"
+                label="Nome"
+                :rules="[(val) => !!val || '* Requirido']"
+                lazy-rules
+              />
 
-              <q-input filled v-model="lastName" label="Sobrenome" lazy-rules />
+              <q-input
+                filled
+                v-model="lastName"
+                label="Sobrenome"
+                :rules="[(val) => !!val || '* Requirido']"
+                lazy-rules
+              />
 
-              <q-input filled v-model="email" label="E-mail" lazy-rules />
+              <q-input
+                filled
+                v-model="email"
+                label="E-mail"
+                :rules="[(val) => !!val || '* Requirido']"
+                lazy-rules
+              />
 
               <q-input
                 type="password"
                 filled
                 v-model="password"
                 label="Senha"
+                :rules="[
+                  (val) => !!val || '* Requirido',
+                  (val) =>
+                    val.length > 8 ||
+                    'A senha precisa ter pelo menos 8 caracteres',
+                ]"
                 lazy-rules
               />
 
@@ -34,6 +67,12 @@
                 filled
                 v-model="confirmPassword"
                 label="Repita a senha"
+                :rules="[
+                  (val) => !!val || '* Requirido',
+                  (val) =>
+                    val.length > 8 ||
+                    'A senha precisa ter pelo menos 8 caracteres',
+                ]"
                 lazy-rules
               />
 
@@ -63,17 +102,21 @@ export default defineComponent({
     const email = ref();
     const password = ref();
     const confirmPassword = ref();
+    const error = ref(false);
 
     const submit = async () => {
-      await axios.post("register", {
-        first_name: firstName.value,
-        last_name: lastName.value,
-        email: email.value,
-        password: password.value,
-        password_confirm: confirmPassword.value
-      });
-
-      await router.push("/login");
+      try {
+        await axios.post("register", {
+          first_name: firstName.value,
+          last_name: lastName.value,
+          email: email.value,
+          password: password.value,
+          password_confirm: confirmPassword.value,
+        });
+        await router.push("/login");
+      } catch (e) {
+        error.value = true;
+      }
     };
 
     const login = async () => {
@@ -85,8 +128,9 @@ export default defineComponent({
       email,
       password,
       confirmPassword,
+      error,
       login,
-      submit
+      submit,
     };
   },
 });

@@ -7,8 +7,8 @@ import axios from 'axios'
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({ baseURL: 'https://localhost:8000/api/' })
-axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
+const api = axios.create({ baseURL: 'https://127.0.0.1:8000/api/' })
+axios.defaults.baseURL = "http://api.e-merenda.com.br/api/";
 axios.defaults.withCredentials = true;
 
 export default boot(({ app }) => {
