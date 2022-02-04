@@ -2,7 +2,7 @@
   <div class="full-width row justify-end q-pa-md">
     <q-btn
       color="primary"
-      label="Adicionar contrato"
+      label="Adicionar vínculo"
       icon-right="add_circle_outline"
       to="/cliente/contrato/adicionar"
     />
