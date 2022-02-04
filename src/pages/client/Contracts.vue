@@ -11,6 +11,19 @@
     <div class="full-width row wrap">
       <q-card-section>
         <div class="text-h6">Vínculo</div>
+        <q-card-section
+          style="
+            background-color: rgb(255, 255, 204);
+            border-radius: 40px;
+            border: solid 1px;
+          "
+        >
+          <p style="font-size: 20px;"><strong>Atenção</strong></p>
+          <p>
+            Está seção é destinada a vincular a chamada, ou contrato, a escola.
+          </p>
+          <p>Para fazer pedidos, vá até a seção <strong>Pedidos</strong></p>
+        </q-card-section>
       </q-card-section>
     </div>
     <q-card-section class="q-mt-none">
