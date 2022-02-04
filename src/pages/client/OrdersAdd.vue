@@ -2,7 +2,7 @@
   <q-card class="my-card q-ma-md">
     <div class="full-width row wrap">
       <q-card-section>
-        <div class="text-h6">Adicionar contrato</div>
+        <div class="text-h6">Adicionar pedido</div>
       </q-card-section>
     </div>
     <q-card-section>

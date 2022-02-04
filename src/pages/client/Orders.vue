@@ -11,6 +11,22 @@
     <div class="full-width row wrap">
       <q-card-section>
         <div class="text-h6">Pedidos</div>
+        <q-card-section
+          style="
+            background-color: rgb(255, 255, 204);
+            border-radius: 40px;
+            border: solid 1px;
+          "
+        >
+          <p><strong>Atenção</strong></p>
+          <p>
+            É necessário adicionar uma escola e vinculá-la a uma chamada para
+            efetuar o pedido.
+          </p>
+          <p>
+            A escola pode ser adicionada na seção <strong>Cadastro</strong> e o vínculo na seção <strong>Vínculo</strong>.
+          </p>
+        </q-card-section>
       </q-card-section>
     </div>
     <q-card-section class="q-mt-none">

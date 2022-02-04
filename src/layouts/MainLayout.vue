@@ -27,7 +27,7 @@
             <q-icon name="assignment" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Contratos</q-item-label>
+            <q-item-label>Vínculo</q-item-label>
           </q-item-section>
         </q-item>
         <q-item to="/cliente/pedido">

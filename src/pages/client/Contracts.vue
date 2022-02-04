@@ -10,7 +10,7 @@
   <q-card class="my-card q-ma-md" style="min-height: 150px">
     <div class="full-width row wrap">
       <q-card-section>
-        <div class="text-h6">Contratos</div>
+        <div class="text-h6">Vínculo</div>
       </q-card-section>
     </div>
     <q-card-section class="q-mt-none">
@@ -18,7 +18,7 @@
         <div class="full-width wrap q-mt-sm">
           <q-card-section class="row">
             <div class="text-h6 col-12 q-mb-sm">
-              Contratante: {{ contract.government_entity.name }}
+              Escola: {{ contract.government_entity.name }}
             </div>
             <div class="col-12 col-md-3">
               CNPJ:
@@ -36,7 +36,7 @@
           <q-separator size="1px" />
           <q-card-section class="row">
             <div class="col-12 text-h6 q-mb-sm">
-              Contratada: {{ contract.bidding.provider_entity.name }}
+              Fornecedor: {{ contract.bidding.provider_entity.name }}
             </div>
             <div class="col-3 col-md-3">
               CNPJ:
@@ -52,7 +52,7 @@
           <q-card-section class="row full-width">
 
             <div class="col-12 text-h6">
-              Produtos contratados
+              Produtos vinculados
             </div>
             <div class="row justify-center full-width">
               <div class="col-12 col-md-10 q-ma-lg">

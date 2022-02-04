@@ -2,7 +2,25 @@
   <q-card class="my-card q-ma-md">
     <div class="full-width row wrap">
       <q-card-section>
-        <div class="text-h6">Adicionar contrato</div>
+        <div class="text-h6">Adicionar vínculo</div>
+        <q-card-section
+          style="
+            background-color: rgb(255, 255, 204);
+            border-radius: 40px;
+            border: solid 1px;
+          "
+        >
+          <p>Atenção</p>
+          <p>
+            <strong>Escolas municipais:</strong> Insira 0 em todos os produtos
+            da chamada, pois, desta forma, vincula todos produtos da chamada ao
+            vínculo da escola com o fornecedor.
+          </p>
+          <p>
+            <strong>Escolas Estaduais:</strong> Insira os quantitativos presente
+            no contrato efetuado com a escola.
+          </p>
+        </q-card-section>
       </q-card-section>
     </div>
     <q-card-section>
@@ -35,7 +53,7 @@
               filled
               class="q-ma-sm"
               v-model="contract_manager"
-              label="Gestor(a) do contrato"
+              label="Responsável pelos pedidos"
               :rules="[(val) => !!val || '* Requirido']"
               lazy-rules
             />
@@ -47,7 +65,7 @@
               v-model="contract_manager_telefone"
               mask="(##) #####-####"
               fill-mask
-              label="Telefone do gestor(a)"
+              label="Telefone do responsável"
               :rules="[
                 (val) => !!val || '* Requirido',
                 (val) =>
@@ -63,7 +81,7 @@
               v-model="contract_manager_cpf"
               mask="###.###.###.-##"
               fill-mask
-              label="CPF do gestor(a)"
+              label="CPF do responsável"
               :rules="[
                 (val) => !!val || '* Requirido',
                 (val) =>
