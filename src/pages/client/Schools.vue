@@ -23,8 +23,11 @@
             <div class="col-12 col-md-3">
               CNPJ: {{ school.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5") }}
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-3">
               Endereço: {{ school.andress }}, {{ school.andress_number }}
+            </div>
+            <div class="col-12 col-md-3">
+              Cidade: {{ school.city.city }}
             </div>
             <div class="col-12 col-md-3">
               Tipo: {{ school.government_type }}

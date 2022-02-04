@@ -43,10 +43,25 @@
               <q-input
                 filled
                 v-model="email"
+                type="email"
                 label="E-mail"
                 :rules="[(val) => !!val || '* Requirido']"
                 lazy-rules
               />
+
+              <q-input
+              filled
+              v-model="phone"
+              mask="(##) #####-####"
+              fill-mask
+              label="Telefone para contato"
+              :rules="[
+                (val) => !!val || '* Requirido',
+                (val) =>
+                  val.replace(/\D/g, '').length > 10 || 'Número incorreto',
+              ]"
+              lazy-rules
+            />
 
               <q-input
                 type="password"
@@ -100,6 +115,7 @@ export default defineComponent({
     const firstName = ref();
     const lastName = ref();
     const email = ref();
+    const phone = ref();
     const password = ref();
     const confirmPassword = ref();
     const error = ref(false);
@@ -110,6 +126,7 @@ export default defineComponent({
           first_name: firstName.value,
           last_name: lastName.value,
           email: email.value,
+          phone: phone.value.replace(/\D/g, ''),
           password: password.value,
           password_confirm: confirmPassword.value,
         });
@@ -127,6 +144,7 @@ export default defineComponent({
       lastName,
       email,
       password,
+      phone,
       confirmPassword,
       error,
       login,

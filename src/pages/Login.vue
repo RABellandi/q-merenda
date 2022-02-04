@@ -26,6 +26,7 @@
                 v-model="email"
                 label="E-mail"
                 :rules="[(val) => !!val || '* Requirido']"
+                type="email"
                 lazy-rules
               />
 

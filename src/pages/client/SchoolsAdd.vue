@@ -114,7 +114,7 @@
               lazy-rules
             />
           </div>
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-3">
             <q-input
               filled
               class="q-ma-sm"
@@ -127,6 +127,19 @@
                 (val) =>
                   val.replace(/\D/g, '').length > 10 || 'Número incorreto',
               ]"
+              lazy-rules
+            />
+          </div>
+          <div class="col-12 col-md-4">
+            <q-input
+              filled
+              class="q-ma-sm"
+              v-model="email"
+              type="email"
+              fill-mask
+              label="E-mail da escola"
+              :rules="[
+                (val) => !!val || '* Requirido']"
               lazy-rules
             />
           </div>
@@ -162,6 +175,7 @@ export default {
     const state = ref();
     const cep = ref();
     const phone = ref();
+    const email = ref();
     const role = ref();
     const options = ["MUNICIPAL", "ESTADUAL", "FEDERAL"];
     const city_options = ref([]);
@@ -172,15 +186,12 @@ export default {
     onBeforeMount( async () => {
       const cities = await axios.get('cities');
 
-      console.log(cities.data);
-
       cities.data.data.forEach(element => {
         city_options.value.push({
           label: element.city,
           value: element.id
           })
       });
-      console.log(city_options);
     })
 
     const submit = async () => {
@@ -195,6 +206,7 @@ export default {
         state: state.value,
         cep: cep.value.replace(/\D/g, ''),
         phone: phone.value.replace(/\D/g, ''),
+        email: email.value
       });
 
       const userUp = await updateUser(response.data.data.id);
@@ -223,6 +235,7 @@ export default {
       state,
       cep,
       phone,
+      email,
       role,
       role_options,
       city_options,
