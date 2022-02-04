@@ -11,6 +11,9 @@
               <div class="col ellipsis">
                 Já possuí conta?
                 <a @click="login" style="color: blue">Entre por aqui!</a>
+                <p class="q-ma-none"><strong>Atenção: Esse é o cadastro do usuário.</strong></p>
+                <p class="q-ma-none">O cadastro da escola é efetuado</p>
+                <p class="q-ma-none">dentro do sistema</p>
               </div>
             </div>
           </q-card-section>
