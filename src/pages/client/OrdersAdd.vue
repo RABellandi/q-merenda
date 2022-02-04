@@ -13,7 +13,7 @@
               filled
               v-model="contract"
               :options="contract_options"
-              label="Contrato"
+              label="Vínculo"
               :rules="[(val) => !!val || '* Requirido']"
               lazy-rules
               class="q-ma-sm"
