@@ -35,7 +35,7 @@
             <q-icon name="local_shipping" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Pedido</q-item-label>
+            <q-item-label>Pedidos</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>

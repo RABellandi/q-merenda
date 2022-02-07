@@ -28,8 +28,7 @@
               label="CNPJ"
               :rules="[
                 (val) => !!val || '* Requirido',
-                (val) =>
-                  val.replace(/\D/g, '').length > 13 || 'CNPJ incorreto',
+                (val) => val.replace(/\D/g, '').length > 13 || 'CNPJ incorreto',
               ]"
               lazy-rules
             />
@@ -86,8 +85,7 @@
               label="CEP"
               :rules="[
                 (val) => !!val || '* Requirido',
-                (val) =>
-                  val.replace(/\D/g, '').length > 7 || 'CEP incorreto',
+                (val) => val.replace(/\D/g, '').length > 7 || 'CEP incorreto',
               ]"
               lazy-rules
             />
@@ -138,8 +136,7 @@
               type="email"
               fill-mask
               label="E-mail da escola"
-              :rules="[
-                (val) => !!val || '* Requirido']"
+              :rules="[(val) => !!val || '* Requirido']"
               lazy-rules
             />
           </div>
@@ -154,6 +151,25 @@
         </div>
       </q-form>
     </q-card-section>
+    <q-dialog v-model="cnpj_dup">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Alerta</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <p>CNPJ já cadastrado.</p>
+          <p>
+            Caso não apareça em Cadastro, entre em contato com o fornecedor.
+          </p>
+          <p>Telefone: (65) 99910-6724</p>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-card>
 </template>
 
@@ -167,6 +183,7 @@ export default {
   setup() {
     const school = ref();
     const cnpj = ref();
+    const cnpj_dup = ref(false);
     const gorvernmentType = ref();
     const andress = ref();
     const andress_number = ref();
@@ -182,36 +199,41 @@ export default {
     const role_options = ["DIRETOR(A)", "SECRETÁRIO(A)", "MERENDEIRO(A)"];
     const router = useRouter();
 
+    onBeforeMount(async () => {
+      const cities = await axios.get("cities");
 
-    onBeforeMount( async () => {
-      const cities = await axios.get('cities');
-
-      cities.data.data.forEach(element => {
+      cities.data.data.forEach((element) => {
         city_options.value.push({
           label: element.city,
-          value: element.id
-          })
+          value: element.id,
+        });
       });
-    })
+    });
 
     const submit = async () => {
-      const response = await axios.post("client", {
-        name: school.value,
-        cnpj: cnpj.value.replace(/\D/g, ''),
-        government_type: gorvernmentType.value,
-        andress: andress.value,
-        andress_number: andress_number.value,
-        district: district.value,
-        city: city.value.value,
-        state: state.value,
-        cep: cep.value.replace(/\D/g, ''),
-        phone: phone.value.replace(/\D/g, ''),
-        email: email.value
-      });
-
-      const userUp = await updateUser(response.data.data.id);
-
-      await router.push("/cliente/cadastro");
+      try {
+        const response = await axios.post("client", {
+          name: school.value,
+          cnpj: cnpj.value.replace(/\D/g, ""),
+          government_type: gorvernmentType.value,
+          andress: andress.value,
+          andress_number: andress_number.value,
+          district: district.value,
+          city: city.value.value,
+          state: state.value,
+          cep: cep.value.replace(/\D/g, ""),
+          phone: phone.value.replace(/\D/g, ""),
+          email: email.value,
+        });
+        const userUp = await updateUser(response.data.data.id);
+        await router.push("/cliente/cadastro");
+      } catch (e) {
+        // console.log(e.response);
+        if (e.response.data.cnpj[0] === "Cliente com este CNPJ já existe.") {
+          console.log("passe");
+          cnpj_dup.value = true;
+        }
+      }
     };
 
     const updateUser = async (school_id) => {
@@ -239,6 +261,7 @@ export default {
       role,
       role_options,
       city_options,
+      cnpj_dup,
       submit,
     };
   },
