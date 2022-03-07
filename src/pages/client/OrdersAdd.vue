@@ -219,7 +219,6 @@ export default {
     });
 
     const submit = async () => {
-      submited.value = true
       const productSave = [];
       products.value.forEach((element) => {
         if (element.quantity != "") {
@@ -233,6 +232,7 @@ export default {
       });
 
       if (productSave.length != 0) {
+        submited.value = true
         const response = await axios.post("orders", {
           contract: contract.value.value,
           client_notes: notes.value,
