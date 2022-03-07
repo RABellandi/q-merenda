@@ -49,17 +49,28 @@
           </q-card-section>
           <q-separator size="1px" />
           <q-card-section class="row">
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-3 q-mt-sm">
               Status de entrega:
-              {{ order.delivery_status }}
+              <a v-if="order.file_pdf" :href="order.file_pdf">
+                {{ order.delivery_status }}
+              </a>
+              <span v-else>{{ order.delivery_status }}</span>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-3 q-mt-sm">
               Status Financeiro: {{ order.billing_status }}
             </div>
-            <div v-if="order.nf" class="col-12 col-md-3">
-              Data da entrega: {{ order.nf }}
+            <div v-if="order.billing_nf" class="col-12 col-md-3 q-mt-sm">
+              Nota fiscal: Nº
+              <a v-if="order.nf_pdf" :href="order.nf_pdf">
+                {{ order.billing_nf }}
+              </a>
+              <span v-else>{{ order.billing_nf }}</span>
+
             </div>
-            <div v-if="order.delivery_date" class="col-12 col-md-3">
+            <div v-if="order.billing_date" class="col-12 col-md-3 q-mt-sm">
+              Data do faturamento: {{ order.billing_date }}
+            </div>
+            <div v-if="order.delivery_date" class="col-12 col-md-3 q-mt-sm">
               Data da entrega: {{ order.delivery_date }}
             </div>
           </q-card-section>
@@ -107,7 +118,7 @@
             </div>
           </q-card-section>
           <q-separator size="1px" />
-          <q-card-section class="row full-width justify-end">
+          <q-card-section class="row full-width justify-end dark">
             <div class="text-h6 col-12 col-md-6 q-mr-sm text-right">
               Total: R$ {{ order.total.toFixed(2) }}
             </div>

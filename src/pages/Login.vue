@@ -71,7 +71,7 @@ export default defineComponent({
           email: email.value,
           password: password.value,
         });
-        await router.push("/cliente");
+        await router.push("/cliente/pedido");
       } catch (e) {
         error.value = true;
       }

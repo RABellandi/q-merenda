@@ -115,6 +115,7 @@
               type="submit"
               color="primary"
               class="q-mr-sm"
+              :disable="submited"
             />
           </div>
         </div>
@@ -155,6 +156,7 @@ export default {
     const products = ref([]);
     const contain_product = ref(false);
     const notes = ref();
+    const submited = ref(false);
 
     watch(contract, (count, prevCount) => {
       if (contract.value != "") {
@@ -217,6 +219,7 @@ export default {
     });
 
     const submit = async () => {
+      submited.value = true
       const productSave = [];
       products.value.forEach((element) => {
         if (element.quantity != "") {
@@ -248,6 +251,7 @@ export default {
     };
 
     return {
+      submited,
       contract,
       contract_options,
       products,
